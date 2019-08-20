@@ -54,7 +54,7 @@ export default class About extends Vue {
       specular: 0x111111
     });
     const box = new THREE.Mesh(geometry, materials);
-    // box.position.y = 10;
+    // box.position.y = -10;
     this.stats = new Stats();
     document.body.appendChild(this.stats.dom);
     box.receiveShadow = true;
@@ -118,7 +118,7 @@ export default class About extends Vue {
     this.reRender();
   }
   public reRender() {
-     window.requestAnimationFrame(this.reRender);
+    window.requestAnimationFrame(this.reRender);
     let time = performance.now() * 0.001;
 
     this.light1.position.x = Math.sin(time * 0.6) * 9;
@@ -138,7 +138,6 @@ export default class About extends Vue {
     this.light2.rotation.z = time;
     this.renderer.render(this.scene, this.camera);
     this.stats.update();
-   
   }
   public generateTexture(): HTMLCanvasElement {
     const canvas = document.createElement('canvas');
