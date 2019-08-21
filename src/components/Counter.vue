@@ -21,8 +21,6 @@
 <script lang="ts">
 import { getName, DecoratorClass } from '@/assets/js/nm'; // @ is an alias to /src
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue';
-// import { getName } from '../assets/js/nm'; // @ is an alias to /src
 import sum from '../assets/js/jest';
 import { DecoratedClass } from 'vue-class-component/lib/declarations';
 
@@ -38,9 +36,14 @@ export default class Counter extends Vue {
     name: 'outer'
   };
   mounted() {
-    console.log('child mounted', sum(1, 2));
-    console.log(getName());
     this.instance = new DecoratorClass('lj');
+    console.log('组建二mounted');
+  }
+  beforeDestroy() {
+    console.log('组建二beforeDestroy');
+  }
+  destroyed() {
+    console.log('组建二destroyed');
   }
   public increment() {
     this.count++;

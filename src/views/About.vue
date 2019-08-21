@@ -10,7 +10,8 @@ interface BoxSize {
   width: number;
   height: number;
 }
-
+let timer!: number;
+let stats!: Stats;
 @Component
 export default class About extends Vue {
   public camera!: THREE.Camera;
@@ -18,12 +19,12 @@ export default class About extends Vue {
   public scene!: THREE.Scene;
   public light1!: THREE.Light;
   public light2!: THREE.Light;
-  public stats!: Stats;
   public mounted() {
     this.init();
   }
   public beforeDestroy() {
-    document.body.removeChild(this.stats.dom);
+    document.body.removeChild(stats.dom);
+    window.cancelAnimationFrame(timer);
   }
   get boxComp(): BoxSize {
     const width = (this.$refs.box as HTMLElement).offsetWidth;
@@ -55,8 +56,8 @@ export default class About extends Vue {
     });
     const box = new THREE.Mesh(geometry, materials);
     // box.position.y = -10;
-    this.stats = new Stats();
-    document.body.appendChild(this.stats.dom);
+    stats = new Stats();
+    document.body.appendChild(stats.dom);
     box.receiveShadow = true;
     this.scene.add(box);
     this.renderFn();
@@ -118,7 +119,7 @@ export default class About extends Vue {
     this.reRender();
   }
   public reRender() {
-    window.requestAnimationFrame(this.reRender);
+    timer = window.requestAnimationFrame(this.reRender);
     let time = performance.now() * 0.001;
 
     this.light1.position.x = Math.sin(time * 0.6) * 9;
@@ -137,7 +138,7 @@ export default class About extends Vue {
     this.light2.rotation.x = time;
     this.light2.rotation.z = time;
     this.renderer.render(this.scene, this.camera);
-    this.stats.update();
+    stats.update();
   }
   public generateTexture(): HTMLCanvasElement {
     const canvas = document.createElement('canvas');

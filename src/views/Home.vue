@@ -16,6 +16,7 @@ import * as THREE from 'three';
 import { Light, SpotLight, Camera, Vector3 } from 'three';
 import Stats from 'stats.js';
 
+let stats!: Stats;
 @Component({
   components: {
     HelloWorld,
@@ -27,9 +28,12 @@ export default class Home extends Vue {
   public propClick(str: string): void {
     console.log(str);
   }
+  beforeDestroy() {
+    window.cancelAnimationFrame(this.requestId);
+  }
   public fontThree(): void {
     const loader = new THREE.FontLoader();
-    loader.load('./helvetiker_bold.typeface.json', (font) => {
+    loader.load('./helvetiker_bold.typeface.json', font => {
       const renderer = new THREE.WebGLRenderer({
         canvas: document.getElementById('myCanvas') as HTMLCanvasElement
       });
@@ -88,7 +92,7 @@ export default class Home extends Vue {
       cylinder.rotation.set(0, 0, 0);
       scene.add(cylinder);
       renderer.render(scene, camera);
-      const stats = new Stats();
+      stats = new Stats();
       stats.showPanel(0);
       document.body.appendChild(stats.dom);
       const draw = () => {

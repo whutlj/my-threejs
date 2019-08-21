@@ -23,6 +23,7 @@ const radius: number = 100;
 let theta: number = 0;
 let INTERSECTED: any = null;
 const mouse: THREE.Vector2 = new THREE.Vector2();
+let timer!: number;
 @Component
 export default class InterCube extends Vue {
   mounted() {
@@ -33,6 +34,7 @@ export default class InterCube extends Vue {
   beforeDestroy() {
     document.body.removeChild(stats.dom);
     this.boxRef.removeEventListener('mousemove', this.onMouseMove);
+    window.cancelAnimationFrame(timer);
   }
   get boxRef(): HTMLElement {
     return this.$refs.box as HTMLElement;
@@ -106,7 +108,7 @@ export default class InterCube extends Vue {
   }
 
   public animate(): void {
-    window.requestAnimationFrame(this.animate);
+    timer = window.requestAnimationFrame(this.animate);
     this.renderFn();
     stats.update();
   }

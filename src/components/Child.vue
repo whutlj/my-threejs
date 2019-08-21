@@ -32,7 +32,15 @@ export default class Child extends Vue {
   private address: object = {
     address: '成都'
   };
-
+  mounted() {
+    console.log('组建三mounted');
+  }
+  beforeDestroy() {
+    console.log('组建三beforeDestroy');
+  }
+  destroyed() {
+    console.log('组建三destroyed');
+  }
   public callMe(name: string): string {
     console.log('emit call me');
     return name;

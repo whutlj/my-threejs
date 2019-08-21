@@ -14,3 +14,13 @@ declare module 'stats.js' {
     public update(): void;
   }
 }
+interface GuiController {
+  onChange(cb: Function): void;
+}
+declare module 'dat.gui' {
+  class GUI {
+    constructor();
+    public destroy(): void;
+    public add(one: object, key: string): GuiController;
+  }
+}

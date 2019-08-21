@@ -15,6 +15,7 @@ const mouse: THREE.Vector2 = new THREE.Vector2();
 const raycaster: THREE.Raycaster = new THREE.Raycaster();
 let geometry: THREE.BufferGeometry;
 const PARTICLE_SIZE = 5;
+let timer!: number;
 // let INTERSECTED;
 @Component
 export default class About extends Vue {
@@ -33,8 +34,9 @@ export default class About extends Vue {
     });
     this.boxRef.addEventListener('mousemove', this.mouseMove);
   }
-  befroeDestroy() {
+  beforeDestroy() {
     document.body.removeChild(this.stats.dom);
+    window.cancelAnimationFrame(timer);
   }
 
   get boxRef(): HTMLElement {
@@ -122,7 +124,7 @@ export default class About extends Vue {
     this.renderer.render(this.scene, this.camera);
   }
   public animate(): void {
-    window.requestAnimationFrame(this.animate);
+    timer = window.requestAnimationFrame(this.animate);
     this.renderFn();
     this.stats.update();
   }
