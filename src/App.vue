@@ -5,7 +5,8 @@
       <router-link to="/about">About</router-link> | 
       <router-link to="/inter">点交互</router-link> |
       <router-link to="/interCube">矩形交互</router-link> |
-      <router-link to="/line">bufferGeomerty</router-link>
+      <router-link to="/line">bufferGeomerty</router-link> |
+      <router-link to="/Crash">碰撞检测</router-link>
     </div>
     <router-view/>
   </div>

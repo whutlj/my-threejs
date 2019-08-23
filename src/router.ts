@@ -49,6 +49,12 @@ export default new Router({
       name: 'line',
       component: () => import(/* webpackChunkName: "hook" */ './views/Line.vue')
       // component: Hook
+    },
+    {
+      path: '/crash',
+      name: 'crash',
+      component: () => import(/* webpackChunkName: "hook" */ './views/Crash.vue')
+      // component: Hook
     }
   ]
 });
