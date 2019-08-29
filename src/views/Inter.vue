@@ -10,6 +10,8 @@ import { PointsMaterial } from 'three';
 interface BoxSize {
   width: number;
   height: number;
+  offsetLeft: number;
+  offsetTop: number;
 }
 const mouse: THREE.Vector2 = new THREE.Vector2();
 const raycaster: THREE.Raycaster = new THREE.Raycaster();
@@ -42,18 +44,25 @@ export default class About extends Vue {
   get boxRef(): HTMLElement {
     return this.$refs.box as HTMLElement;
   }
-  get boxComp(): BoxSize {
+   get boxComp(): BoxSize {
     const width = (this.$refs.box as HTMLElement).offsetWidth;
     const height = (this.$refs.box as HTMLElement).offsetHeight;
+    const offsetLeft = (this.$refs.box as HTMLElement).offsetLeft;
+    const offsetTop = (this.$refs.box as HTMLElement).offsetTop;
     return {
       width,
-      height
+      height,
+      offsetTop,
+      offsetLeft
     };
   }
-  public mouseMove(event: MouseEvent): void {
+  public mouseMove(event: MouseEvent) {
     event.preventDefault();
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    const { width, height, offsetLeft, offsetTop } = this.boxComp;
+    const startX = event.clientX - offsetLeft;
+    const startY = event.clientY - offsetTop;
+    mouse.x = (startX / width) * 2 - 1;
+    mouse.y = -(startY / height) * 2 + 1;
   }
   public init(): void {
     this.scene = new THREE.Scene();
@@ -100,10 +109,10 @@ export default class About extends Vue {
   }
 
   public renderFn(): void {
-    // const geometry1 = this.pointBox.geometry as THREE.BufferGeometry;
-    // const attributes = geometry1.attributes;
-    // raycaster.setFromCamera(mouse, this.camera);
-    // const intersects = raycaster.intersectObject(this.pointBox);
+    const geometry1 = this.pointBox.geometry as THREE.BufferGeometry;
+    const attributes = geometry1.attributes;
+    raycaster.setFromCamera(mouse, this.camera);
+    const intersects = raycaster.intersectObject(this.pointBox);
     // if (intersects.length > 0) {
     //   if (INTERSECTED != intersects[0].index) {
     //     attributes.size.array[INTERSECTED] = PARTICLE_SIZE;

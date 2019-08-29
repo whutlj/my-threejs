@@ -5,6 +5,7 @@ function resolvePath(dir) {
 
 const assetsPath = resolvePath('assets');
 module.exports = {
+  publicPath: './',
   chainWebpack: config => {
     config.resolve.alias.set('@assets', assetsPath);
   }

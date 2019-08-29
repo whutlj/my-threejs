@@ -153,7 +153,7 @@ export default class About extends Vue {
 </script>
 <style scoped>
 .about {
-  width: 1200px;
-  height: 900px;
+  width: 100vw;
+  height: 100vh;
 }
 </style>

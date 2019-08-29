@@ -1,10 +1,28 @@
 <template>
   <div class="home">
-    <div @click="fontThree">测试</div>
-    <div @click="cylinderThree">绘制模型4</div>
-    <div @click="shadowShow">shadowShow</div>
-    <div @click="stopRotation">停止转动</div>
-    <canvas id="myCanvas" width="1000px" height="600px"></canvas>
+    <div id="nav">
+      <div class="nav-item">
+        <router-link to="/basic">基本几何形状</router-link>
+      </div>
+      <div class="nav-item">
+        <router-link to="/light">材质</router-link>
+      </div>
+      <div class="nav-item">
+        <router-link to="/pointLight">点光源</router-link>
+      </div>
+      <div class="nav-item">
+        <router-link to="/spotLight">聚光灯</router-link>
+      </div>
+      <div class="nav-item">
+        <router-link to="/texture">纹理效果</router-link>
+      </div>
+      <div class="nav-item">
+        <router-link to="/sprite">雪花效果</router-link>
+      </div>
+      <div class="nav-item">
+        <router-link to="/interCube">矩形交互</router-link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -123,10 +141,8 @@ export default class Home extends Vue {
     const camera = new THREE.PerspectiveCamera(50, 4 / 3, 1, 30);
     camera.position.set(5, 5, 5);
     camera.lookAt(new Vector3(0, 0, 0));
-    const plane = new THREE.Mesh(
-      new THREE.PlaneGeometry(8, 8, 16, 16),
-      new THREE.MeshLambertMaterial({ color: 0xcccccc })
-    );
+    const mat = new THREE.MeshLambertMaterial({ color: 0xcccccc });
+    const plane = new THREE.Mesh(new THREE.PlaneGeometry(8, 8, 16, 16), mat);
     plane.rotation.x = -Math.PI / 2;
     plane.position.y = 0;
     plane.receiveShadow = true;

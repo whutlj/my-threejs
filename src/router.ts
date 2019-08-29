@@ -18,43 +18,57 @@ export default new Router({
       component: Home
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/pointLight',
+      name: 'pointLight',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-      // component: About
+      component: () => import(/* webpackChunkName: "about" */ './views/PointLight.vue')
     },
     {
       path: '/inter',
       name: 'inter',
       component: () => import(/* webpackChunkName: "inter" */ './views/Inter.vue')
-      // component: Inter
     },
     {
       path: '/interCube',
       name: 'interCube',
       component: () => import(/* webpackChunkName: "interCube" */ './views/InterCube.vue')
-      // component: InterCube
     },
     {
       path: '/hook',
       name: 'hook',
       component: () => import(/* webpackChunkName: "hook" */ './views/Hook.vue')
-      // component: Hook
     },
     {
-      path: '/line',
-      name: 'line',
-      component: () => import(/* webpackChunkName: "hook" */ './views/Line.vue')
-      // component: Hook
+      path: '/sprite',
+      name: 'sprite',
+      component: () => import(/* webpackChunkName: "hook" */ './views/Sprite.vue')
     },
     {
       path: '/crash',
       name: 'crash',
       component: () => import(/* webpackChunkName: "hook" */ './views/Crash.vue')
-      // component: Hook
+    },
+    {
+      path: '/basic',
+      name: 'basic',
+      component: () => import(/* webpackChunkName: "hook" */ './views/Basic.vue')
+    },
+    {
+      path: '/light',
+      name: 'light',
+      component: () => import(/* webpackChunkName: "hook" */ './views/Light.vue')
+    },
+    {
+      path: '/spotLight',
+      name: 'spotLight',
+      component: () => import(/* webpackChunkName: "hook" */ './views/SpotLight.vue')
+    },
+    {
+      path: '/texture',
+      name: 'texture',
+      component: () => import(/* webpackChunkName: "hook" */ './views/Texture.vue')
     }
   ]
 });

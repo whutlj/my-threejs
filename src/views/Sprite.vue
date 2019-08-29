@@ -22,6 +22,9 @@ let stats!: Stats;
 let gui!: dat.GUI;
 let parameters!: any[];
 const mouse: THREE.Vector2 = new THREE.Vector2();
+let startAnimation: boolean = false;
+let startColor: boolean = false;
+let startMouse: boolean = false;
 // let rayCaster!: THREE.Raycaster;
 // const radius: number = 100;
 // let theta: number = 0;
@@ -81,23 +84,18 @@ export default class InterCube extends Vue {
     const sprite5 = textureloader.load('./s5.png');
     const vertices: number[] = [];
     for (let i = 0; i < 10000; i++) {
-      // 创建1000个粒子
+      // 创建10000个粒子
       const x = Math.random() * 2000 - 1000;
       const y = Math.random() * 2000 - 1000;
       const z = Math.random() * 2000 - 1000;
       vertices.push(x, y, z);
     }
-    geometry.addAttribute(
-      'position',
-      new THREE.Float32BufferAttribute(vertices, 3)
-    );
-    parameters = [
-      [[1.0, 0.2, 0.5], sprite2, 20],
+    geometry.addAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    parameters = [[[1.0, 0.2, 0.5], sprite2, 20],
       [[0.95, 0.1, 0.5], sprite3, 15],
       [[0.9, 0.05, 0.5], sprite1, 10],
       [[0.85, 0, 0.5], sprite5, 8],
-      [[0.8, 0, 0.5], sprite4, 5]
-    ];
+      [[0.8, 0, 0.5], sprite4, 5]];
     for (let i = 0; i < parameters.length; i++) {
       const colors = parameters[i][0] as number[];
       const map = parameters[i][1] as THREE.Texture;
@@ -105,7 +103,7 @@ export default class InterCube extends Vue {
       materials[i] = new THREE.PointsMaterial({
         size,
         map,
-        transparent: true,
+        transparent: false,
         depthTest: false,
         blending: THREE.AdditiveBlending
       });
@@ -129,14 +127,29 @@ export default class InterCube extends Vue {
     // 初始化gui
     gui = new dat.GUI();
     const params = {
-      texture: true
+      texture: true,
+      animation: startAnimation,
+      color: startColor,
+      mouse: startMouse
     };
     const controller = gui.add(params, 'texture');
+    const animateController = gui.add(params, 'animation');
+    const colorController = gui.add(params, 'color');
+    const mouseController = gui.add(params, 'mouse');
     controller.onChange((value: boolean) => {
       for (let i = 0; i < materials.length; i++) {
         materials[i].map = value ? (parameters[i][1] as THREE.Texture) : null;
         materials[i].needsUpdate = true;
       }
+    });
+    animateController.onChange((value: boolean) => {
+      startAnimation = value;
+    });
+    colorController.onChange((value: boolean) => {
+      startColor = value;
+    });
+    mouseController.onChange((value: boolean) => {
+      startMouse = value;
     });
   }
   public animate(): void {
@@ -146,25 +159,29 @@ export default class InterCube extends Vue {
   }
   public renderFn(): void {
     const time = +new Date() * 0.00005;
-    if (mouse) {
+    if (startMouse && mouse) {
       camera.position.x += (mouse.x - camera.position.x) * 0.05;
       camera.position.y += (-mouse.y - camera.position.y) * 0.05;
     }
     camera.lookAt(scene.position);
     // 让雪花动起来
-    const children = scene.children;
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      if (child instanceof THREE.Points) {
-        // 是点对象
-        child.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
+    if (startAnimation) {
+      const children = scene.children;
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (child instanceof THREE.Points) {
+          // 是点对象
+          child.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
+        }
       }
     }
     // 改变雪花颜色
-    for (let i = 0; i < materials.length; i++) {
-      const colors = parameters[i][0] as number[];
-      const color1 = ((360 * (colors[0] + time)) % 360) / 360; // 色彩模式 值在0-1之间
-      materials[i].color.setHSL(color1, colors[1], colors[2]);
+    if (startColor) {
+      for (let i = 0; i < materials.length; i++) {
+        const colors = parameters[i][0] as number[];
+        const color1 = ((360 * (colors[0] + time)) % 360) / 360; // 色彩模式 值在0-1之间
+        materials[i].color.setHSL(color1, colors[1], colors[2]);
+      }
     }
     renderer.render(scene, camera);
   }
@@ -177,7 +194,7 @@ export default class InterCube extends Vue {
 </script>
 <style scoped>
 .line {
-  width: 1200px;
-  height: 900px;
+  width: 100vw;
+  height: 100vh;
 }
 </style>

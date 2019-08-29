@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> | 
-      <router-link to="/inter">点交互</router-link> |
-      <router-link to="/interCube">矩形交互</router-link> |
-      <router-link to="/line">bufferGeomerty</router-link> |
-      <router-link to="/Crash">碰撞检测</router-link>
-    </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <style>
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  margin: 0;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -31,5 +31,8 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+a {
+  text-decoration: none;
 }
 </style>

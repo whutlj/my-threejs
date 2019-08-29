@@ -156,7 +156,7 @@ export default class InterCube extends Vue {
 
 <style scoped>
 .inter-cube {
-  width: 1200px;
-  height: 900px;
+  width: 100vw;
+  height: 100vh;
 }
 </style>
