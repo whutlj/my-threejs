@@ -27,8 +27,10 @@ class Basic extends Vue {
   mounted() {
     this.init();
     this.animate();
+    document.documentElement.addEventListener('keydown', this.keydown);
   }
   beforeDestroy() {
+    document.documentElement.removeEventListener('keydown', this.keydown);
     document.body.removeChild(stats.dom);
     gui.destroy();
   }
@@ -47,12 +49,33 @@ class Basic extends Vue {
       offsetLeft
     };
   }
+  keydown(event: KeyboardEvent) {
+    const { keyCode } = event;
+    if (keyCode === 38) {
+      // 上移动
+      camera.position.y++;
+    } else if (keyCode === 40) {
+      camera.position.y--;
+    } else if (keyCode === 37) {
+      camera.position.x--;
+    } else if (keyCode === 39) {
+      camera.position.x++;
+    }
+  }
   init() {
     const { width, height } = this.boxComp;
     camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
-    camera.position.set(0, 20, 50);
+    camera.position.set(0, 0, 50);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
     scene = new THREE.Scene();
+    // 添加网格帮助器
+    scene.add(new THREE.GridHelper(60, 40));
+    // 添加主标轴帮助器
+    const axesHelper = new THREE.AxesHelper(10);
+    scene.add(axesHelper);
+    // 添加相机帮助器
+    const helper = new THREE.CameraHelper(camera);
+    scene.add(helper);
     // 立方体
     const boxGeo = new THREE.BoxGeometry(5, 5, 5);
     basicMat = new THREE.MeshBasicMaterial({
@@ -114,6 +137,7 @@ class Basic extends Vue {
   }
   public animate(): void {
     window.requestAnimationFrame(this.animate);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
     this.renderFn();
     stats.update();
   }

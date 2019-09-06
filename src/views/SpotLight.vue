@@ -61,7 +61,7 @@ class SpotLight extends Vue {
       })
     );
     cube.position.x = 0;
-    cube.position.y = 0.5;
+    cube.position.y = 1;
     // cube.translateY(0.5);
     cube.position.z = 0;
     cube.castShadow = true;
