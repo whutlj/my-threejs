@@ -31,6 +31,7 @@ class Basic extends Vue {
   mounted() {
     this.init();
     this.animate();
+    console.log(this.$route.matched);
   }
   beforeDestroy() {
     document.body.removeChild(stats.dom);

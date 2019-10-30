@@ -9,16 +9,23 @@
     <slot name="bot" :address="address">
       默认bot
     </slot>
+    <sv></sv>
   </div>
 </template>
 <script lang="ts">
+
 interface User {
   name: string;
   age: number;
 }
 import { Vue, Component } from 'vue-property-decorator';
+import Sv from './Sv.vue';
 
-@Component
+@Component({
+  components: {
+    Sv
+  }
+})
 export default class Child extends Vue {
   private count: number = 0;
   private user: User = {
@@ -33,7 +40,7 @@ export default class Child extends Vue {
     address: '成都'
   };
   mounted() {
-    console.log('组建三mounted');
+    // console.log('组建三mounted', this.$vnode);
   }
   beforeDestroy() {
     console.log('组建三beforeDestroy');

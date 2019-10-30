@@ -3,8 +3,12 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import Whut, { getGlobal } from 'whutlj_npm_test';
+import lazyPlugin from '@/plugin/lazy';
+import myRouter from '@/plugin/myRouter';
 
 Vue.config.productionTip = false;
+Vue.use(lazyPlugin);
+Vue.use(myRouter);
 console.log(getGlobal());
 new Vue({
   router,

@@ -4,6 +4,7 @@
       <div class="nav-item">
         <router-link to="/basic">基本几何形状</router-link>
       </div>
+      <div class="btn" @click="changeType">改变type</div>
       <div class="nav-item">
         <router-link to="/light">材质</router-link>
       </div>
@@ -22,7 +23,14 @@
       <div class="nav-item">
         <router-link to="/interCube">矩形交互</router-link>
       </div>
+      <div class="nav-item">
+        <router-link to="/gj">骨架屏实践</router-link>
+      </div>
+      <div class="nav-item">
+        <router-link to="/updateTest/init">beforeRouteUpdate测试</router-link>
+      </div>
     </div>
+    <video id="videoElement"></video>
   </div>
 </template>
 
@@ -33,7 +41,10 @@ import Counter from '@/components/Counter.vue'; // @ is an alias to /src
 import * as THREE from 'three';
 import { Light, SpotLight, Camera, Vector3 } from 'three';
 import Stats from 'stats.js';
-
+import Player from 'xgplayer';
+import Chimee from 'chimee';
+import flvjs from 'flv.js';
+// http://picture.s3.hualiantv.com/hualian-tupian/MzAwMTg0MDIxNTcwNzE2MzQxODI4MTQ3NjU3MTAzNDE1NzAwMzYwNDM3NDUubXA0
 let stats!: Stats;
 @Component({
   components: {
@@ -48,6 +59,18 @@ export default class Home extends Vue {
   }
   beforeDestroy() {
     window.cancelAnimationFrame(this.requestId);
+  }
+  mounted() {
+    if (flvjs.isSupported()) {
+        const videoElement = document.getElementById('videoElement');
+        const flvPlayer = flvjs.createPlayer({
+            type: 'mp4',
+            url: 'http://picture.s3.hualiantv.com/hualian-tupian/MzAwMTg0MDIxNTcwNzE2MzQxODI4MTQ3NjU3MTAzNDE1NzAwMzYwNDM3NDUubXA0'
+        });
+        flvPlayer.attachMediaElement(videoElement as HTMLMediaElement);
+        flvPlayer.load();
+        flvPlayer.play();
+    }
   }
   public fontThree(): void {
     const loader = new THREE.FontLoader();
@@ -71,6 +94,9 @@ export default class Home extends Vue {
       scene.add(mesh);
       renderer.render(scene, camera);
     });
+  }
+  public changeType(): void {
+    this.$lj.name = Math.random();
   }
   public cylinderThree(): void {
     const renderer = new THREE.WebGLRenderer({

@@ -1,9 +1,27 @@
 <template>
   <div id="app">
     <router-view />
+    <my-router />
+    <my-link to="/path">跳转</my-link>
   </div>
 </template>
 
+<script>
+export default {
+  name: 'app',
+  data() {
+    return {
+      type: '1'
+    };
+  },
+  // mounted() {},
+  // methods: {
+  //   changeType() {
+  //     this.$lj.name = Math.random();
+  //   }
+  // }
+};
+</script>
 <style>
 html,
 body {
@@ -34,5 +52,13 @@ body {
 }
 a {
   text-decoration: none;
+}
+.btn {
+  height: 32px;
+  line-height: 32px;
+  border-radius: 8px;
+  display: inline-block;
+  padding: 6px 8px;
+  background: #ffff00;
 }
 </style>
