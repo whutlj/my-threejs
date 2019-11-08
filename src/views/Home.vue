@@ -47,8 +47,6 @@ import { Light, SpotLight, Camera, Vector3 } from 'three';
 import Stats from 'stats.js';
 import Player from 'xgplayer';
 import Chimee from 'chimee';
-import flvjs from 'flv.js';
-// http://picture.s3.hualiantv.com/hualian-tupian/MzAwMTg0MDIxNTcwNzE2MzQxODI4MTQ3NjU3MTAzNDE1NzAwMzYwNDM3NDUubXA0
 let stats!: Stats;
 @Component({
   components: {
@@ -72,16 +70,6 @@ export default class Home extends Vue {
   }
   mounted() {
     this.testObj.age = 100;
-    if (flvjs.isSupported()) {
-        const videoElement = document.getElementById('videoElement');
-        const flvPlayer = flvjs.createPlayer({
-            type: 'mp4',
-            url: 'http://picture.s3.hualiantv.com/hualian-tupian/MzAwMTg0MDIxNTcwNzE2MzQxODI4MTQ3NjU3MTAzNDE1NzAwMzYwNDM3NDUubXA0'
-        });
-        flvPlayer.attachMediaElement(videoElement as HTMLMediaElement);
-        flvPlayer.load();
-        flvPlayer.play();
-    }
   }
   public fontThree(): void {
     const loader = new THREE.FontLoader();

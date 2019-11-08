@@ -7,7 +7,6 @@ import lazyPlugin from '@/plugin/lazy';
 import myRouter from '@/plugin/myRouter';
 import packageJson from '../package.json';
 
-console.log('--package', packageJson);
 Vue.config.productionTip = false;
 Vue.use(lazyPlugin);
 Vue.use(myRouter);
