@@ -34,6 +34,6 @@ export default {
       type = '3';
     }
     const renderVNode = chooseComponent(type);
-    return createElement(renderVNode, data, children);
+    return  parent.$createElement(renderVNode, data, children);
   }
 };

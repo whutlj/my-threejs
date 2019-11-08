@@ -24,6 +24,14 @@ import Sv from './Sv.vue';
 @Component({
   components: {
     Sv
+  },
+  props: {
+    testProp: [Boolean],
+    name: {
+      default: function() {
+        return [1]
+      }
+    }
   }
 })
 export default class Child extends Vue {
@@ -40,7 +48,7 @@ export default class Child extends Vue {
     address: '成都'
   };
   mounted() {
-    // console.log('组建三mounted', this.$vnode);
+    console.log('child组建挂载', this.testProp);
   }
   beforeDestroy() {
     console.log('组建三beforeDestroy');

@@ -30,6 +30,10 @@
         <router-link to="/updateTest/init">beforeRouteUpdate测试</router-link>
       </div>
     </div>
+    <div>{{testObj.name}}</div>
+    <div>{{testObj.age}}</div>
+    <div>{{testObj.nest.name}}</div>
+    <div @click="changeTestObj">点击改变</div>
     <video id="videoElement"></video>
   </div>
 </template>
@@ -54,6 +58,12 @@ let stats!: Stats;
 })
 export default class Home extends Vue {
   public requestId!: number;
+  public testObj = {
+    name: 'testObj',
+    nest: {
+      name: 'nest'
+    }
+  }
   public propClick(str: string): void {
     console.log(str);
   }
@@ -61,6 +71,7 @@ export default class Home extends Vue {
     window.cancelAnimationFrame(this.requestId);
   }
   mounted() {
+    this.testObj.age = 100;
     if (flvjs.isSupported()) {
         const videoElement = document.getElementById('videoElement');
         const flvPlayer = flvjs.createPlayer({
@@ -97,6 +108,10 @@ export default class Home extends Vue {
   }
   public changeType(): void {
     this.$lj.name = Math.random();
+  }
+  public changeTestObj(): void{
+    console.log('改变');
+    this.$set(this.testObj.nest, 'age', 20);
   }
   public cylinderThree(): void {
     const renderer = new THREE.WebGLRenderer({

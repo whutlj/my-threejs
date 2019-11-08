@@ -1,8 +1,18 @@
 <template>
   <div id="app">
     <router-view />
-    <my-router />
-    <my-link to="/path">跳转</my-link>
+    <my-router>
+      <template v-slot:default>
+        我是默认的
+      </template>
+      <template v-slot:top="{user: {name}}">
+        我是top{{name}}
+      </template>
+      <template v-slot:bot="{address: {address}}">
+        我是bot{{address}}
+      </template>
+    </my-router>
+    <my-link to="/path">跳转1</my-link>
   </div>
 </template>
 
@@ -13,7 +23,7 @@ export default {
     return {
       type: '1'
     };
-  },
+  }
   // mounted() {},
   // methods: {
   //   changeType() {
