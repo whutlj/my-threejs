@@ -56,6 +56,7 @@ let stats!: Stats;
 })
 export default class Home extends Vue {
   public requestId!: number;
+  public msg: string = '232';
   public testObj = {
     name: 'testObj',
     nest: {
@@ -69,7 +70,9 @@ export default class Home extends Vue {
     window.cancelAnimationFrame(this.requestId);
   }
   mounted() {
-    this.testObj.age = 100;
+  }
+  get comMsg() {
+    return this.msg;
   }
   public fontThree(): void {
     const loader = new THREE.FontLoader();
